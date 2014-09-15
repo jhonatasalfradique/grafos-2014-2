@@ -1,83 +1,18 @@
-﻿Build started 14/09/2014 22:31:36.
+﻿Build started 15/09/2014 09:53:41.
      1>Project "D:\grafos-2014-2\TrabalhoDeGrafos\TrabalhoDeGrafos\TrabalhoDeGrafos.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          D:\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\TrabalhoDeGrafos.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt TrabalhoDeGrafos.cpp graph.cpp
          TrabalhoDeGrafos.cpp
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(44): error C3867: 'std::deque<int,std::allocator<_Ty>>::back': function call missing argument list; use '&std::deque<int,std::allocator<_Ty>>::back' to create a pointer to member
-                 with
-                 [
-                     _Ty=int
-                 ]
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(44): error C2568: '+' : unable to resolve function overload
-                 d:\microsoft visual studio 12.0\vc\include\deque(1419): could be 'const int &std::deque<int,std::allocator<_Ty>>::back(void) const'
-                 with
-                 [
-                     _Ty=int
-                 ]
-                 d:\microsoft visual studio 12.0\vc\include\deque(1414): or       'int &std::deque<int,std::allocator<_Ty>>::back(void)'
-                 with
-                 [
-                     _Ty=int
-                 ]
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(66): error C3867: 'std::deque<int,std::allocator<_Ty>>::back': function call missing argument list; use '&std::deque<int,std::allocator<_Ty>>::back' to create a pointer to member
-                 with
-                 [
-                     _Ty=int
-                 ]
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(67): error C3867: 'std::deque<double,std::allocator<_Ty>>::size': function call missing argument list; use '&std::deque<double,std::allocator<_Ty>>::size' to create a pointer to member
-                 with
-                 [
-                     _Ty=double
-                 ]
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(67): error C2446: '>' : no conversion from 'unsigned int (__thiscall std::deque<double,std::allocator<_Ty>>::* )(void) throw() const' to 'int'
-                 with
-                 [
-                     _Ty=double
-                 ]
-                 There is no context in which this conversion is possible
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(67): error C2297: '>' : illegal, right operand has type 'unsigned int (__thiscall std::deque<double,std::allocator<_Ty>>::* )(void) throw() const'
-                 with
-                 [
-                     _Ty=double
-                 ]
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(69): warning C4018: '<' : signed/unsigned mismatch
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(76): error C3867: 'std::deque<double,std::allocator<_Ty>>::size': function call missing argument list; use '&std::deque<double,std::allocator<_Ty>>::size' to create a pointer to member
-                 with
-                 [
-                     _Ty=double
-                 ]
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(76): error C2446: '<' : no conversion from 'unsigned int (__thiscall std::deque<double,std::allocator<_Ty>>::* )(void) throw() const' to 'int'
-                 with
-                 [
-                     _Ty=double
-                 ]
-                 There is no context in which this conversion is possible
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(76): error C2297: '<' : illegal, right operand has type 'unsigned int (__thiscall std::deque<double,std::allocator<_Ty>>::* )(void) throw() const'
-                 with
-                 [
-                     _Ty=double
-                 ]
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(82): error C3867: 'std::deque<double,std::allocator<_Ty>>::size': function call missing argument list; use '&std::deque<double,std::allocator<_Ty>>::size' to create a pointer to member
-                 with
-                 [
-                     _Ty=double
-                 ]
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(82): error C2446: '<' : no conversion from 'unsigned int (__thiscall std::deque<double,std::allocator<_Ty>>::* )(void) throw() const' to 'int'
-                 with
-                 [
-                     _Ty=double
-                 ]
-                 There is no context in which this conversion is possible
-     1>d:\grafos-2014-2\trabalhodegrafos\trabalhodegrafos\graph.cpp(82): error C2297: '<' : illegal, right operand has type 'unsigned int (__thiscall std::deque<double,std::allocator<_Ty>>::* )(void) throw() const'
-                 with
-                 [
-                     _Ty=double
-                 ]
          Generating Code...
          Skipping... (no relevant changes detected)
          graph.cpp
-     1>Done Building Project "D:\grafos-2014-2\TrabalhoDeGrafos\TrabalhoDeGrafos\TrabalhoDeGrafos.vcxproj" (Build target(s)) -- FAILED.
+       Link:
+         D:\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\grafos-2014-2\TrabalhoDeGrafos\Debug\TrabalhoDeGrafos.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\grafos-2014-2\TrabalhoDeGrafos\Debug\TrabalhoDeGrafos.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\grafos-2014-2\TrabalhoDeGrafos\Debug\TrabalhoDeGrafos.lib" /MACHINE:X86 Debug\graph.obj
+         Debug\stdafx.obj
+         Debug\TrabalhoDeGrafos.obj
+         TrabalhoDeGrafos.vcxproj -> D:\grafos-2014-2\TrabalhoDeGrafos\Debug\TrabalhoDeGrafos.exe
+     1>Done Building Project "D:\grafos-2014-2\TrabalhoDeGrafos\TrabalhoDeGrafos\TrabalhoDeGrafos.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:01.03
+Time Elapsed 00:00:03.51

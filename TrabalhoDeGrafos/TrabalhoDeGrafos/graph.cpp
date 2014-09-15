@@ -41,7 +41,7 @@ class Graph
 			int i, j; //vertex i and j from the graph
 			while (infile >> i >> j) // load pair of data in each variable
 			{
-				data[i - 1].back = 1 + data[i - 1].back;//Grade + 1
+				data[i - 1].back() = 1 + data[i - 1].back();//Grade + 1
 				m++; // each line add 1 edge
 				data[i - 1].push_front(j); // vertex i receive j as neighboor
 				data[j - 1].push_front(i); // vertex j receive i as neighboor
@@ -63,23 +63,25 @@ class Graph
 
 		for each (deque<int> di in db)
 		{
-			int grade = di.back;//Grade of vertex
-			if (grade > egd.size) 
+			int grade = di.back();//Grade of vertex
+			if (grade > (int) egd.size()) 
 				{
-				if (grade < egd.max_size()) egd.resize(grade, 0); // check for memory leak
+				if (grade < (int) egd.max_size()) egd.resize(grade, 0); // check for memory leak
 				else std::cout << "Error output stack overflow.\n";
 				}
 			egd[grade] += egd[grade]/n; //f(d) = n(d)/n
 		}
 		double totalegd = 0;
+
+		size_t e =  egd.size();
 		
-		for (int i = 0; i < egd.size; i++)
+		for (size_t i = 0; i < e; i++)
 		{
 			totalegd += (i+1)*egd[i];
 		}
 		file << "# d_medio = " << totalegd << "\n";
 
-		for (int i = 0; i < egd.size; i++)
+		for (size_t i = 0; i < e; i++)
 		{
 			file << i << " " << egd[i] << "\n"; // Print each grade number
 		}
