@@ -41,7 +41,7 @@ class Graph
 			int i, j; //vertex i and j from the graph
 			while (infile >> i >> j) // load pair of data in each variable
 			{
-				data[i - 1].back ++;//Grade + 1
+				data[i - 1].back = 1 + data[i - 1].back;//Grade + 1
 				m++; // each line add 1 edge
 				data[i - 1].push_front(j); // vertex i receive j as neighboor
 				data[j - 1].push_front(i); // vertex j receive i as neighboor

@@ -20,9 +20,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout << "Press 2 for matrix or any number for list" << endl;
 	cin >> b;
 	g = new Graph(filename , b);// (file name, type of data)
-	g.Output();
-
-	
+	g->Output();
+		
 		 
 	
 	return 0;
