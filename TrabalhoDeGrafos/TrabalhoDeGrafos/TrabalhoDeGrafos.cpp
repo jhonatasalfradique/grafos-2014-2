@@ -14,11 +14,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 	Graph *g;
 	int b;
-	string filename;
-	cout << "Enter file name" << endl;
-	cin >> filename;
+	string filename = "graph.txt";
+	//cout << "Enter file name" << endl;
+	//cin >> filename;
 	cout << "Press 2 for matrix or any number for list" << endl;
 	cin >> b;
+	cout << "New Graph\n";
 	g = new Graph(filename , b);// (file name, type of data)
 	g->Output();
 		
