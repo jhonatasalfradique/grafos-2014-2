@@ -35,7 +35,8 @@ class Graph
 				data[i - 1][j - 1] = 1; // vertex i receive j as neighboor
 				data[j - 1][i - 1] = 1; // vertex j receive i as neighboor
 				m++; // each line add 1 edge
-				data[i - 1][n] ++;//Grade + 1
+				data[i - 1][n] ++;
+				data[j - 1][n] ++;//Grade + 1
 				}
 			db = data;
 			}
@@ -48,6 +49,7 @@ class Graph
 			{
 				cout << "While\n";
 				data[i - 1].back() = 1 + data[i - 1].back();//Grade + 1
+				data[j - 1].back() = 1 + data[j - 1].back();//Grade + 1
 				m++; // each line add 1 edge
 				data[i - 1].push_front(j); // vertex i receive j as neighboor
 				data[j - 1].push_front(i); // vertex j receive i as neighboor
@@ -65,33 +67,30 @@ class Graph
 
 		file << "# n = " << n << "\n";
 		file << "# m = " << m << "\n";
-		deque<double> egd;// empiric grade distribution
-		cout << "Output()";
-		// grau medio = 2E/V (E aresta e V Vertice)
+		double d_medio = (2 * m) / (n);// grau medio = 2E/V (E aresta e V Vertice)
+		file << "# d_medio = " << d_medio << "\n";
+
+
+		deque<double> egd(1,(double) 0.0);// empiric grade distribution
+		cout << "Output()" << endl;
+		
 		for each (deque<int> di in db)
 		{
-			cout << "Output() for each";
 			int grade = di.back();//Grade of vertex
 			if (grade > (int) egd.size()) 
 				{
-				if (grade < (int) egd.max_size()) egd.resize(grade, 0); // check for memory leak
+				if (grade < (int)egd.max_size())// check for memory leak
+				{
+					egd.resize(grade, (double) 0.0);
+				} 
 				else cout << "Error output stack overflow.\n";
 				}
-		//	egd[grade] += egd[grade]/n; //f(d) = n(d)/n
-			cout << "Output() end";
-		}
-		double totalegd = 0;
+			cout << egd.size() << " size and back " << grade << endl;
 
-		size_t e =  egd.size();
-		cout << "Output()3";
-		for (size_t i = 0; i < e; i++)
-		{
-			totalegd += (i+1)*egd[i];
+			egd[grade - 1] = egd[grade - 1] + (double) 1/n; //f(d) = n(d)/n
 		}
-		double d_medio = (2*m)/(n);
-		file << "# d_medio = " << d_medio << "\n";
-		cout << "Output()4";
-		for (size_t i = 0; i < e; i++)
+	
+		for (size_t i = 0; i < egd.size(); i++)
 		{
 			file << i << " " << egd[i] << "\n"; // Print each grade number
 		}
