@@ -22,6 +22,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout << "New Graph\n";
 	g = new Graph(filename , b);// (file name, type of data)
 	g->Output();
+
 		
 		 
 	

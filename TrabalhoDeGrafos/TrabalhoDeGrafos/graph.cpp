@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <deque>
+#include <list>
 using namespace std;
 
 class Graph
@@ -16,10 +17,11 @@ class Graph
 	int m; //edge number
 	deque<deque<int>> db; // graph
 	
+	
 	Graph::Graph(string filename,int t)
 	{
 		m = 0;
-
+		
 		cout << "Filename: " +  filename;
 		std::ifstream infile(filename);		//argumento de entrada nome do arquivo
 		infile >> n;//get N from first line of file
@@ -56,7 +58,7 @@ class Graph
 			}
 			db = data;
 		}
-		
+	
 	}
 	
 
@@ -72,7 +74,6 @@ class Graph
 
 
 		deque<double> egd(1,(double) 0.0);// empiric grade distribution
-		cout << "Output()" << endl;
 		
 		for each (deque<int> di in db)
 		{
@@ -85,7 +86,6 @@ class Graph
 				} 
 				else cout << "Error output stack overflow.\n";
 				}
-			cout << egd.size() << " size and back " << grade << endl;
 
 			egd[grade - 1] = egd[grade - 1] + (double) 1/n; //f(d) = n(d)/n
 		}
@@ -95,8 +95,34 @@ class Graph
 			file << i << " " << egd[i] << "\n"; // Print each grade number
 		}
 
-
-
 		file.close();
+	}
+	
+	deque<int> BFS(list<int> li,int v) // This function is based on List of Neighbors
+	{
+		//std::list<int> unreachable(1,n+1);
+		deque<int> marker(n+1,0); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
+		deque<int> fifo;
+		marker[v] = -1;
+		marker[0] = 1; //count +1
+		fifo.push_back(v);
+		while (!(fifo.empty()))
+		{
+			int u = fifo.front(); // pick and erase U from list
+			fifo.pop_front();
+		//	unreachable.erase(u-1);
+			for each (int w in db[u])// check all neighbors
+			{
+				if (marker[w] = 0)
+				{
+					marker[w] = u; // u is w parent on the bfs tree
+					marker[0] = marker[0] + 1; // 1 more vertex read
+					fifo.push_back(w);// w added to the list
+					
+					
+				}
+			}
+		}
+		return marker;
 	}
 };
