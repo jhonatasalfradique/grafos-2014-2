@@ -23,9 +23,20 @@ int _tmain(int argc, _TCHAR* argv[])
 	g->Output();
 	cout << "Press 1 for BFS or 2 for print mode" << endl;
 	cin >> c;
-	if (c == 1) { for each(int a in g->BFS(g->db,1)){ cout << a << " "; } }
+	if (c == 1) { for each(tuple<int, int> a in g->BFS(g->db, 1)){ cout << get<0>(a) << " at lvl " << get<1>(a) << endl; } }
 	if (c == 2) { for each (deque<int> a in g->db) { a.pop_back(); for each (int i in a){ cout << i << " "; } cout << endl; } }
+	if (c == 3)
+	{
+		ofstream file; // output file
+		file.open("BFS.txt");
+		file << "Vertice pai e Nivel para cada vertice";
 
+		for each(tuple<int, int> a in g->BFS(g->db, 1).pop_front())//eliminate first row of counting stats
+		{
+			file << get<0>(a) << "  " << get<1>(a) << endl;
+		}
+		file.close();
+	}
 		 
 	
 	return 0;
