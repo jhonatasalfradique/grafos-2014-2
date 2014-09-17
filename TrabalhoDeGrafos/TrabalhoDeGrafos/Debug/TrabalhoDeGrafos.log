@@ -1,12 +1,8 @@
-﻿Build started 16/09/2014 20:37:07.
+﻿Build started 16/09/2014 23:59:06.
      1>Project "D:\grafos-2014-2\TrabalhoDeGrafos\TrabalhoDeGrafos\TrabalhoDeGrafos.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\TrabalhoDeGrafos.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt TrabalhoDeGrafos.cpp graph.cpp
-         graph.cpp
-         Generating Code...
-         Compiling...
+         D:\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\TrabalhoDeGrafos.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt TrabalhoDeGrafos.cpp
          TrabalhoDeGrafos.cpp
-         Generating Code...
        Link:
          D:\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\grafos-2014-2\TrabalhoDeGrafos\Debug\TrabalhoDeGrafos.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\grafos-2014-2\TrabalhoDeGrafos\Debug\TrabalhoDeGrafos.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\grafos-2014-2\TrabalhoDeGrafos\Debug\TrabalhoDeGrafos.lib" /MACHINE:X86 Debug\graph.obj
          Debug\stdafx.obj
@@ -16,4 +12,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.80
+Time Elapsed 00:00:01.29

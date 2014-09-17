@@ -22,18 +22,15 @@ class Graph
 	{
 		m = 0;
 		
-		cout << "Filename: " +  filename;
+		cout << "Filename: " +  filename << endl;
 		std::ifstream infile(filename);		//argumento de entrada nome do arquivo
 		infile >> n;//get N from first line of file
-		cout << "File loaded.\n";
+		cout << "File loaded." << endl;
 		if (t == 2){//matrix
-			cout << "Deque before\n";
 			deque<deque<int>> data(n, deque<int> (n+1,0)); // deque square matrix filled with 0 (extra slot for number of neighbors)
-			cout << "Deque\n";
 			// Begin reading your stream here
 			int i, j; //vertex i and j from the graph
 			while (infile >> i >> j){ // load pair of data in each variable
-				cout << "While\n";
 				data[i - 1][j - 1] = 1; // vertex i receive j as neighboor
 				data[j - 1][i - 1] = 1; // vertex j receive i as neighboor
 				m++; // each line add 1 edge
@@ -49,7 +46,6 @@ class Graph
 			int i, j; //vertex i and j from the graph
 			while (infile >> i >> j) // load pair of data in each variable
 			{
-				cout << "While\n";
 				data[i - 1].back() = 1 + data[i - 1].back();//Grade + 1
 				data[j - 1].back() = 1 + data[j - 1].back();//Grade + 1
 				m++; // each line add 1 edge
@@ -98,7 +94,7 @@ class Graph
 		file.close();
 	}
 	
-	deque<int> BFS(list<int> li,int v) // This function is based on List of Neighbors
+	deque<int> BFS(deque<deque<int>> vect,int v) // This function is based on List of Neighbors
 	{
 		//std::list<int> unreachable(1,n+1);
 		deque<int> marker(n+1,0); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
@@ -106,14 +102,16 @@ class Graph
 		marker[v] = -1;
 		marker[0] = 1; //count +1
 		fifo.push_back(v);
-		while (!(fifo.empty()))
+		while (!fifo.empty())
 		{
+		
 			int u = fifo.front(); // pick and erase U from list
 			fifo.pop_front();
-		//	unreachable.erase(u-1);
-			for each (int w in db[u])// check all neighbors
-			{
-				if (marker[w] = 0)
+			//	unreachable.erase(u-1);
+			vect[u - 1].pop_back();
+			for each (int w in vect[u-1])
+			{				
+				if (marker[w] == 0)
 				{
 					marker[w] = u; // u is w parent on the bfs tree
 					marker[0] = marker[0] + 1; // 1 more vertex read
@@ -125,4 +123,39 @@ class Graph
 		}
 		return marker;
 	}
+
+	deque<int> DFS(deque<deque<int>> vect,int v) // This function is based on List of Neighbors
+	{
+		//std::list<int> unreachable(1,n+1);
+		deque<int> marker(n + 1, 0); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
+		deque<int> filo;
+		marker[v] = -1;
+		marker[0] = 1; //count +1
+		filo.push_back(v);
+		while (!filo.empty())
+		{
+
+			int u = filo.back(); // pick and erase U from list
+			filo.pop_back();
+			//	unreachable.erase(u-1);
+			vect[u - 1].pop_back();
+			for each (int w in vect[u - 1])
+			{
+				cout << "vertice " << w << " filho de " << marker[w] << endl;
+				if (marker[w] == 0)
+				{
+					marker[w] = u; // u is w parent on the bfs tree
+					marker[0] = marker[0] + 1; // 1 more vertex read
+					filo.push_back(w);// w added to the list
+
+
+				}
+			}
+		}
+		return marker;
+	}
+
+
+	
+
 };
