@@ -30,8 +30,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		ofstream file; // output file
 		file.open("BFS.txt");
 		file << "Vertice pai e Nivel para cada vertice";
-
-		for each(tuple<int, int> a in g->BFS(g->db, 1).pop_front())//eliminate first row of counting stats
+		deque<tuple<int, int>> k = g->BFS(g->db, 1);
+		k.pop_front();
+		for each(tuple<int, int> a in k)//eliminate first row of counting stats
 		{
 			file << get<0>(a) << "  " << get<1>(a) << endl;
 		}
