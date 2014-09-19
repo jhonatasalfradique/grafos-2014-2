@@ -1,6 +1,3 @@
-//It's the Graph Class
-
-
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
@@ -98,10 +95,10 @@ class Graph
 	deque<tuple<int,int>> BFS(deque<deque<int>> vect,int v) // This function is based on List of Neighbors
 	{
 		//std::list<int> unreachable(1,n+1);
-		deque<tuple<int,int>> marker(n+1,(0,-1)); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
+		deque<tuple<int,int>> marker(n+1,make_tuple(0,-1)); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
 		deque<int> fifo;						// 2nd field of tuple means the tree level( 0 = start )
-		marker[v].swap(-1,0);
-		marker[0].swap(1,0); //count +1
+		marker[v].swap(make_tuple(-1, 0));
+		marker[0].swap(make_tuple(1, 0)); //count +1
 		fifo.push_back(v);
 		for each (deque<int> o in vect) // remove last collum of counting
 		{
@@ -118,7 +115,7 @@ class Graph
 			{				
 				if (get<0>(marker[w]) == 0)
 				{
-					marker[w].swap(u, 1 + get<1>(marker[u])); // u is w parent on the bfs tree
+					marker[w].swap(make_tuple(u, 1 + get<1>(marker[u]))); // u is w parent on the bfs tree
 					get<0>(marker[0]) = get<0>(marker[0]) + 1; // 1 more vertex read
 					fifo.push_back(w);// w added to the list
 					
@@ -132,10 +129,10 @@ class Graph
 	deque<tuple<int, int>> DFS(deque<deque<int>> vect, int v) // This function is based on List of Neighbors
 	{
 		//std::list<int> unreachable(1,n+1);
-		deque<tuple<int, int>> marker(n + 1, (0, -1)); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
+		deque<tuple<int, int>> marker(n + 1, make_tuple(0, -1)); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
 		deque<int> filo;						// 2nd field of tuple means the tree level( 0 = start )
-		marker[v].swap(-1, 0);
-		marker[0].swap(1, 0); //count +1
+		marker[v].swap(make_tuple(-1, 0));
+		marker[0].swap(make_tuple(1, 0)); //count +1
 		filo.push_back(v);
 		for each (deque<int> o in vect) // remove last collum of counting
 		{
@@ -152,9 +149,9 @@ class Graph
 			{
 				if (get<0>(marker[w]) == 0)
 				{
-					marker[w].swap(u, 1 + get<1>(marker[u])); // u is w parent on the bfs tree
+					marker[w].swap(make_tuple(u, 1 + get<1>(marker[u]))); // u is w parent on the bfs tree
 					get<0>(marker[0]) = get<0>(marker[0]) + 1; // 1 more vertex read
-					fifo.push_back(w);// w added to the list
+					filo.push_back(w);// w added to the list
 
 
 				}
