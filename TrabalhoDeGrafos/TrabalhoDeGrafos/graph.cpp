@@ -123,7 +123,7 @@ class Graph
 	{
 		deque<dlist> vlist(0); // free vertex deque double linked list
 
-			for (int i; i < n + 1; i++)// start list to check who was not inspected, first slot for reference where it start
+			for (int i = 0; i < n + 1; i++)// start list to check who was not inspected, first slot for reference where it start
 			{
 				dlist a;
 				a.vertex = i;
