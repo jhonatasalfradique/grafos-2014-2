@@ -14,12 +14,13 @@ class Graph
 	int n; //vertex number
 	int m; //edge number
 	deque<deque<int>> db; // graph
-	
+	deque<deque<int>> cgroup; // connect segment listed
 	
 	Graph::Graph(string filename,int t)
 	{
 		m = 0;
-		
+		cgroup = deque<deque<int>>(1, deque<int>(1, 0));
+
 		cout << "Filename: " +  filename << endl;
 		std::ifstream infile(filename);		//argumento de entrada nome do arquivo
 		infile >> n;//get N from first line of file
@@ -95,8 +96,8 @@ class Graph
 	struct dlist // double linked list
 	{
 		int vertex;
-		dlist *prev = NULL;
-		dlist *next = NULL;
+		dlist * prev = nullptr;
+		dlist * next = nullptr;
 
 		void joinafter(dlist after) // join at the end  
 		{
@@ -112,66 +113,19 @@ class Graph
 
 		void remove()
 		{
-			prev->next = this->next;
-			next->prev = this->prev;
-			delete this;			
+			if (prev != nullptr){ if (this->next != nullptr){ prev->next = this->next; } else { prev->next = nullptr; } }
+			if (next != nullptr){ if (this->prev != nullptr){ next->prev = this->prev; } else { next->prev = nullptr; } }
+			
+			// delete this;			
 		};
+
+		
 	};
 
-
-	deque<tuple<int, int>> BFS(deque<deque<int>> vect, int v) // This function is based on List of Neighbors
+	deque<dlist> chainstart(int k)
 	{
 		deque<dlist> vlist(0); // free vertex deque double linked list
-
-			for (int i; i < n + 1; i++)// start list to check who was not inspected, first slot for reference where it start
-			{
-				dlist a;
-				a.vertex = i;
-				if (i > 1)
-				{
-					vlist[i - 1].joinafter(a);//make this link point to the previous
-				}
-				vlist.push_back(a);
-			
-			}
-
-			deque<tuple<int, int>> marker(n + 1, make_tuple(0, -1)); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
-			deque<int> fifo;						// 2nd field of tuple means the tree level( 0 = start )
-			marker[v].swap(make_tuple(-1, 0));
-			marker[0].swap(make_tuple(1, 0)); //count +1
-			fifo.push_back(v);
-			for each (deque<int> o in vect) // remove last collum of counting
-			{
-				o.pop_back();
-			}
-			while (!fifo.empty())
-			{
-
-				int u = fifo.front(); // pick and erase U from list
-				fifo.pop_front();
-				//	unreachable.erase(u-1);
-
-				for each (int w in vect[u - 1])
-				{
-					if (get<0>(marker[w]) == 0)
-					{
-						marker[w].swap(make_tuple(u, 1 + get<1>(marker[u]))); // u is w parent on the bfs tree
-						get<0>(marker[0]) = get<0>(marker[0]) + 1; // 1 more vertex read
-						fifo.push_back(w);// w added to the list
-						vlist[w].remove();
-					}
-				}
-			}
-
-			get<1>(marker[0]) = vlist[0].next->vertex + 1; // pass first free vertex
-			return marker;
-		}
-
-	deque<tuple<int, int>> DFS(deque<deque<int>> vect, int v) // This function is based on List of Neighbors
-	{
-		deque<dlist> vlist(0); // free vertex deque double linked list
-
-		for (int i; i < n + 1; i++)// start list to check who was not inspected, first slot for reference where it start
+		for (int i = 0; i < k + 1; i++)// start list to check who was not inspected, first slot for reference where it start
 		{
 			dlist a;
 			a.vertex = i;
@@ -182,39 +136,48 @@ class Graph
 			vlist.push_back(a);
 
 		}
-
-		deque<tuple<int, int>> marker(n + 1, make_tuple(0, -1)); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
-		deque<int> filo;						// 2nd field of tuple means the tree level( 0 = start )
-		marker[v].swap(make_tuple(-1, 0));
-		marker[0].swap(make_tuple(1, 0)); //count +1
-		filo.push_back(v);
-		for each (deque<int> o in vect) // remove last collum of counting
-		{
-			o.pop_back();
-		}
-		while (!filo.empty())
-		{
-
-			int u = filo.back(); // pick and erase U from list
-			filo.pop_back();
-			//	unreachable.erase(u-1);
-
-			for each (int w in vect[u - 1])
-			{
-				if (get<0>(marker[w]) == 0)
-				{
-					marker[w].swap(make_tuple(u, 1 + get<1>(marker[u]))); // u is w parent on the bfs tree
-					get<0>(marker[0]) = get<0>(marker[0]) + 1; // 1 more vertex read
-					filo.push_back(w);// w added to the list
-					vlist[w].remove();
-				}
-			}
-		}
-
-		get<1>(marker[0]) = vlist[0].next->vertex + 1; // pass first free vertex
-		return marker;
+		return vlist;
 	}
 
+	tuple<deque<dlist>,deque<tuple<int, int>>> BFS(deque<dlist> vlist,int v) // This function is based on List of Neighbors
+	{//usar vlist para apenas carregar os vertices desconhecidos e economizar iteracoes e espaco
+		
+
+		
+
+			deque<tuple<int, int>> marker(n + 1, make_tuple(0, -1)); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
+			deque<int> fifo;						// 2nd field of tuple means the tree level( 0 = start )
+			marker[v].swap(make_tuple(-1, 0));
+			marker[0].swap(make_tuple(1, 0)); //count +1
+			fifo.push_back(v);
+			for each (deque<int> o in db) // remove last collum of counting
+			{
+				o.pop_back();
+			}
+			while (!fifo.empty())
+			{
+
+				int u = fifo.front(); // pick and erase U from list
+				fifo.pop_front();
+				//	unreachable.erase(u-1);
+
+				for each (int w in db[u - 1])
+				{
+					if (get<0>(marker[w]) == 0)
+					{
+						marker[w].swap(make_tuple(u, 1 + get<1>(marker[u]))); // u is w parent on the bfs tree
+						get<0>(marker[0]) = get<0>(marker[0]) + 1; // 1 more vertex read
+						fifo.push_back(w);// w added to the list
+						vlist[w].remove();//remove W from undiscovered list
+					}
+				}
+			}
+
+			tuple<deque<dlist>, deque<tuple<int, int>>>  temp = make_tuple(vlist, marker);
+			return temp;
+		}
+
+	
 	
 
 };
