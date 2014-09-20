@@ -44,7 +44,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		ofstream file; // output file
 		file.open("BFS.txt");
 		cout << "file opened" << endl;
-		file << "Vertice pai e Nivel para cada vertice";
+		cout << "Vertice pai e Nivel para cada vertice" << endl;
 		deque<tuple<int, int>> k = get<1>(g->BFS(g->chainstart(g->n), 1));
 		k.pop_front();
 		for each(tuple<int, int> a in k) //eliminate first row of counting stats
