@@ -26,11 +26,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	cin >> c;
 	
 	if (c == 1) {
-		tuple<deque<Graph::dlist>, deque<tuple<int, int>>> temp = g->BFS(g->chainstart(g->n), 1);
+		
 		deque<tuple<int, int>> temp2(0);
 		for (int i = 0; i < g->n + 1; i++)
 		{
-			temp2.push_back(get<1>(temp)[i]);
+			temp2.push_back(get<1>(g->BFS(g->chainstart(g->n), 1))[i]);
 		}
 		for each(tuple<int, int> a in temp2)
 		{
@@ -50,6 +50,23 @@ int _tmain(int argc, _TCHAR* argv[])
 		for each(tuple<int, int> a in k) //eliminate first row of counting stats
 		{
 			file << get<0>(a) << "  " << get<1>(a) << endl;
+		}
+		file.close();
+		cout << "file closed";
+	}
+	if (c == 4) 
+	{
+		ofstream file; // output file
+		file.open("rBFS.txt");
+		cout << (g->chainstart(g->n)).front().next->vertex;
+		
+		cout << "file opened" << endl;
+		
+		deque<deque<int>> k = g->rBFS(g->chainstart(g->n));
+		for each(deque<int> a in k) //eliminate first row of counting stats
+		{
+			for each(int p in a){ file << p << endl; }
+			
 		}
 		file.close();
 		cout << "file closed";

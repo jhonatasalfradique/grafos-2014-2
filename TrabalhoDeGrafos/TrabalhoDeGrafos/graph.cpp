@@ -131,20 +131,21 @@ class Graph
 			a.vertex = i;
 			if (i > 1)
 			{
-				vlist[i - 1].joinafter(a);//make this link point to the previous
+				vlist[i-1].joinbefore(a);//make this link point to the previous
 			}
 			vlist.push_back(a);
-
+			cout << vlist[i].vertex<<endl;
 		}
+		cout << vlist[0].vertex << vlist[1].vertex << vlist[2].vertex;
 		return vlist;
 	}
 
-	tuple<deque<dlist>,deque<tuple<int, int>>> BFS(deque<dlist> vlist,int v) // This function is based on List of Neighbors
+	tuple<deque<dlist>,deque<tuple<int, int>>,deque<int>> BFS(deque<dlist> vlist,int v) // This function is based on List of Neighbors
 	{//usar vlist para apenas carregar os vertices desconhecidos e economizar iteracoes e espaco
 		
 
 		
-
+			deque<int> list;
 			deque<tuple<int, int>> marker(n + 1, make_tuple(0, -1)); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
 			deque<int> fifo;						// 2nd field of tuple means the tree level( 0 = start )
 			marker[v].swap(make_tuple(-1, 0));
@@ -168,19 +169,32 @@ class Graph
 						marker[w].swap(make_tuple(u, 1 + get<1>(marker[u]))); // u is w parent on the bfs tree
 						get<0>(marker[0]) = get<0>(marker[0]) + 1; // 1 more vertex read
 						fifo.push_back(w);// w added to the list
+						list.push_back(w);// w added to the list
 						vlist[w].remove();//remove W from undiscovered list
 					}
 				}
 			}
 
-			tuple<deque<dlist>, deque<tuple<int, int>>>  temp = make_tuple(vlist, marker);
+			tuple<deque<dlist>, deque<tuple<int, int>>,deque<int>>  temp = make_tuple(vlist, marker,list);
 			return temp;
 		}
 
 	
-	deque<int> rBFS(deque<dlist> vlist, int v)
+	deque<deque<int>> rBFS(deque<dlist> vlist)
 	{
 
+		deque<deque<int>> list(0);
+		int i = 0;
+		while (vlist[0].next != nullptr)
+		{	
+			if (vlist[0].prev == nullptr){ cout << "nulo"; }
+			cout << vlist[0].vertex << endl;
+			tuple<deque<dlist>, deque<tuple<int, int>>,deque<int>> chest = BFS(vlist, vlist[0].next->vertex); // run BFS on the first vertex
+			vlist = get<0>(chest); // retrieve list to save up iterations
+			list.push_back(get<2>(chest)); // results
+			i++;
+		}
+		return list;
 	}
 
 };
