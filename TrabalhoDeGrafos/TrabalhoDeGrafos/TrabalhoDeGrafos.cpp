@@ -20,7 +20,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout << "Press 2 for matrix or any number for list" << endl;
 	cin >> b;
 	g = new Graph(filename + ".txt" , b);// (file name, type of data)
-	g->Output();
+	g->Output(filename);
 	cout << "Press 1 for BFS / 2 for print / 3 BFS print / 4 rBFS / 5 DFS" << endl;
 	cin >> c;
 	
@@ -39,9 +39,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		} 
 	}
 	if (c == 2) { for each (deque<int> a in g->db) { a.pop_back(); for each (int i in a){ cout << i << " "; } cout << endl; } }
-	if (c == 3)	{ float timev = clock(); g->printBFS(filename); cout << "tempo de exec " << (float)((timev - clock())/CLOCKS_PER_SEC ); }
+	if (c == 3)	{ clock_t timev = clock(); g->printBFS(filename); cout << "tempo de exec " << (float)((timev - clock())/CLOCKS_PER_SEC ); }
 	if (c == 4) {g->printrBFS(filename);}
-	if (c == 5) { float timev = clock(); g->printDFS(filename); cout << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC); }
+	if (c == 5) { clock_t timev = clock(); g->printDFS(filename); cout << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC); }
 		 
 	delete g;
 	return 0;

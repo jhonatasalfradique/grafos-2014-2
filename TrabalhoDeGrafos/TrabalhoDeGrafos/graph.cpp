@@ -57,15 +57,15 @@ class Graph
 	}
 	
 
-	void Output()
+	void Output(string s)
 	{
 		ofstream file; // output file
-		file.open("output.txt");
+		file.open(s + "_output.txt");
 
 		file << "# n = " << n << "\n";
 		file << "# m = " << m << "\n";
-		double d_medio = (2 * m) / (n);// grau medio = 2E/V (E aresta e V Vertice)
-		file << "# d_medio = " << d_medio << "\n";
+		double d_medio = (double) (2 * m) / (n);// grau medio = 2E/V (E aresta e V Vertice)
+		file << "# d_medio = " <<  d_medio << "\n";
 
 
 		deque<double> egd(1,(double) 0.0);// empiric grade distribution
@@ -93,7 +93,7 @@ class Graph
 		file.close();
 	}
 	
-		struct dlist // double linked list
+	struct dlist // double linked list
 	{
 		int vertex;
 		dlist * prev = nullptr;
@@ -149,7 +149,7 @@ class Graph
 	void printBFS(string s)
 	{
 		ofstream file; // output file
-		file.open(s + "BFS.txt");
+		file.open(s + "_BFS.txt");
 		cout << "file opened" << endl;
 		cout << "Vertice pai e Nivel para cada vertice" << endl;
 		deque<tuple<int, int>> k = get<1>(BFS(chainstart(n), 1));
@@ -166,7 +166,7 @@ class Graph
 	void printDFS(string s)
 	{
 		ofstream file; // output file
-		file.open(s + "DFS.txt");
+		file.open(s + "_DFS.txt");
 		cout << "file opened" << endl;
 		cout << "Vertice pai e Nivel para cada vertice" << endl;
 		deque<tuple<int, int>> k = get<1>(DFS(chainstart(n), 1));
@@ -183,7 +183,7 @@ class Graph
 	void printrBFS(string s)
 	{
 		ofstream file; // output file
-		file.open(s + "rBFS.txt");
+		file.open(s + "_rBFS.txt");
 		deque<deque<int>> k = rBFS(chainstart(n));
 		for (int t = 0; t < (int)k.size(); t++)  // Sorting K based on size stored in k[][0]
 		{
@@ -214,7 +214,7 @@ class Graph
 	void printrDFS(string s)
 	{
 		ofstream file; // output file
-		file.open(s + "rDFS.txt");
+		file.open(s + "_rDFS.txt");
 		deque<deque<int>> k = rDFS(chainstart(n));
 		for (int t = 0; t < (int)k.size(); t++)  // Sorting K based on size stored in k[][0]
 		{
