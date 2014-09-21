@@ -1,4 +1,4 @@
-﻿Build started 21/09/2014 16:13:11.
+﻿Build started 21/09/2014 17:11:14.
      1>Project "D:\grafos-2014-2\TrabalhoDeGrafos\TrabalhoDeGrafos\TrabalhoDeGrafos.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          D:\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\TrabalhoDeGrafos.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
@@ -16,4 +16,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.23
+Time Elapsed 00:00:04.09
