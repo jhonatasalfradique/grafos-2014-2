@@ -154,9 +154,11 @@ class Graph
 		cout << "Vertice pai e Nivel para cada vertice" << endl;
 		deque<tuple<int, int>> k = get<1>(BFS(chainstart(n), 1));
 		k.pop_front();
+		int i = 0;
 		for each(tuple<int, int> a in k) //eliminate first row of counting stats
 		{
-			file << get<0>(a) << "  " << get<1>(a) << endl;
+			i++;
+			file << "vertice " << i << " discovered by "  << get<0>(a) << " at level " << get<1>(a) << endl;
 		}
 		file.close();
 		cout << "file closed"; 
@@ -169,9 +171,11 @@ class Graph
 		cout << "Vertice pai e Nivel para cada vertice" << endl;
 		deque<tuple<int, int>> k = get<1>(DFS(chainstart(n), 1));
 		k.pop_front();
+		int i = 0;
 		for each(tuple<int, int> a in k) //eliminate first row of counting stats
 		{
-			file << get<0>(a) << "  " << get<1>(a) << endl;
+			i++;
+			file << "vertice " << i << " discovered by " << get<0>(a) << " at level " << get<1>(a) << endl;
 		}
 		file.close();
 		cout << "file closed";
@@ -200,6 +204,7 @@ class Graph
 
 		for each(deque<int> a in k) 
 		{
+			file << "size :" << a.front() << " components -";;
 			a.pop_front();
 			for each(int p in a){ file << ">" <<p; }
 			file << endl;
@@ -230,6 +235,7 @@ class Graph
 
 		for each(deque<int> a in k)
 		{
+			file << "size :" << a.front() << " components -";;
 			a.pop_front();
 			for each(int p in a){ file << ">" << p; }
 			file << endl;

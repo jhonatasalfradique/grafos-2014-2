@@ -39,9 +39,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		} 
 	}
 	if (c == 2) { for each (deque<int> a in g->db) { a.pop_back(); for each (int i in a){ cout << i << " "; } cout << endl; } }
-	if (c == 3)	{ time_t timev = time(0); g->printBFS(filename); cout << "tempo de exec " << timev - time(0) ; }
+	if (c == 3)	{ float timev = clock(); g->printBFS(filename); cout << "tempo de exec " << (float)((timev - clock())/CLOCKS_PER_SEC ); }
 	if (c == 4) {g->printrBFS(filename);}
-	if (c == 5) { time_t timev = time(0); g->printDFS(filename); cout << "tempo de exec " << timev - time(0); }
+	if (c == 5) { float timev = clock(); g->printDFS(filename); cout << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC); }
 		 
 	delete g;
 	return 0;
