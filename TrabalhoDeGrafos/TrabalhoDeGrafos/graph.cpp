@@ -161,20 +161,81 @@ class Graph
 		file.close();
 		cout << "file closed"; 
 	}
-
+	void printDFS(string s)
+	{
+		ofstream file; // output file
+		file.open(s + "DFS.txt");
+		cout << "file opened" << endl;
+		cout << "Vertice pai e Nivel para cada vertice" << endl;
+		deque<tuple<int, int>> k = get<1>(DFS(chainstart(n), 1));
+		k.pop_front();
+		for each(tuple<int, int> a in k) //eliminate first row of counting stats
+		{
+			file << get<0>(a) << "  " << get<1>(a) << endl;
+		}
+		file.close();
+		cout << "file closed";
+	}
 	void printrBFS(string s)
 	{
 		ofstream file; // output file
 		file.open(s + "rBFS.txt");
 		deque<deque<int>> k = rBFS(chainstart(n));
+		for (int t = 0; t < (int)k.size(); t++)  // Sorting K based on size stored in k[][0]
+		{
+			int i = t;
+			while (i < (int) k.size()-1)
+			{
+				int u;
+				if (k[i][0] > k[i + 1][0])
+				{
+					u = k[i][0]; 
+					k[i][0] = k[i + 1][0];
+					k[i + 1][0] = u;
+				}
+				i++;
+			}
+			
+		}
+
 		for each(deque<int> a in k) 
 		{
+			a.pop_front();
 			for each(int p in a){ file << ">" <<p; }
 			file << endl;
 		}
 		file.close();
 	}
+	void printDFS(string s)
+	{
+		ofstream file; // output file
+		file.open(s + "rDFS.txt");
+		deque<deque<int>> k = rDFS(chainstart(n));
+		for (int t = 0; t < (int)k.size(); t++)  // Sorting K based on size stored in k[][0]
+		{
+			int i = t;
+			while (i < (int)k.size() - 1)
+			{
+				int u;
+				if (k[i][0] > k[i + 1][0])
+				{
+					u = k[i][0];
+					k[i][0] = k[i + 1][0];
+					k[i + 1][0] = u;
+				}
+				i++;
+			}
 
+		}
+
+		for each(deque<int> a in k)
+		{
+			a.pop_front();
+			for each(int p in a){ file << ">" << p; }
+			file << endl;
+		}
+		file.close();
+	}
 	tuple<deque<dlist>,deque<tuple<int, int>>,deque<int>> BFS(deque<dlist> vlist,int v) // This function is based on List of Neighbors
 	{//usar vlist para apenas carregar os vertices desconhecidos e economizar iteracoes e espaco
 		
@@ -183,7 +244,8 @@ class Graph
 			deque<tuple<int, int>> marker(n + 1, make_tuple(0, -1)); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
 			deque<int> fifo;						// 2nd field of tuple means the tree level( 0 = start )
 			marker[v].swap(make_tuple(-1, 0));
-			marker[0].swap(make_tuple(1, 0)); //count +1
+			//marker[0].swap(make_tuple(1, 0)); //count +1
+			list.push_back(1);//count +1
 			vlist = remove(vlist,v);//remove V from undiscovered list
 			fifo.push_back(v);
 			list.push_back(v);// v added to the return list
@@ -201,12 +263,12 @@ class Graph
 					{
 						
 						marker[w].swap(make_tuple(u, 1 + get<1>(marker[u]))); // u is w parent on the bfs tree
-						get<0>(marker[0]) = get<0>(marker[0]) + 1; // 1 more vertex read
-						
+						//get<0>(marker[0]) = get<0>(marker[0]) + 1; // 1 more vertex read
+						list.front() = list.front() + 1; // 1 more vertex read
 						fifo.push_back(w);// w added to the list
 						list.push_back(w);// w added to the return list
 						vlist = remove(vlist,w);//remove W from undiscovered list
-						cout << "marker " << w << endl;
+
 
 					}
 				}
@@ -216,7 +278,48 @@ class Graph
 			return temp;
 		}
 
-	
+	tuple<deque<dlist>, deque<tuple<int, int>>, deque<int>> DFS(deque<dlist> vlist, int v) // This function is based on List of Neighbors
+	{//usar vlist para apenas carregar os vertices desconhecidos e economizar iteracoes e espaco
+
+
+		deque<int> list;
+		deque<tuple<int, int>> marker(n + 1, make_tuple(0, -1)); // mark if U has been red before (0 = not marked, -1 = origin , number = parent) (extra slot at the start to show how many were discovered on this BFS)
+		deque<int> filo;						// 2nd field of tuple means the tree level( 0 = start )
+		marker[v].swap(make_tuple(-1, 0));
+		//marker[0].swap(make_tuple(1, 0)); //count +1
+		list.push_back(1);//count +1
+		vlist = remove(vlist, v);//remove V from undiscovered list
+		filo.push_back(v);
+		list.push_back(v);// v added to the return list
+
+		while (!filo.empty())
+		{
+
+			int u = filo.back(); // pick and erase U from list
+			filo.pop_back();
+			int z = (int)db[u - 1].size();
+			for (int k = 0; k < z - 1; k++)
+			{
+				int w = db[u - 1][k];
+				if (get<0>(marker[w]) == 0)
+				{
+
+					marker[w].swap(make_tuple(u, 1 + get<1>(marker[u]))); // u is w parent on the bfs tree
+					//get<0>(marker[0]) = get<0>(marker[0]) + 1; // 1 more vertex read
+					list.front() = list.front() + 1; // 1 more vertex read
+					filo.push_back(w);// w added to the list
+					list.push_back(w);// w added to the return list
+					vlist = remove(vlist, w);//remove W from undiscovered list
+
+
+				}
+			}
+		}
+
+		tuple<deque<dlist>, deque<tuple<int, int>>, deque<int>>  temp = make_tuple(vlist, marker, list);
+		return temp;
+	}
+
 	deque<deque<int>> rBFS(deque<dlist> vlist)
 	{
 
@@ -227,10 +330,24 @@ class Graph
 			tuple<deque<dlist>, deque<tuple<int, int>>,deque<int>> chest = BFS(vlist, vlist[0].next->vertex); // run BFS on the first vertex
 			vlist = get<0>(chest); // retrieve list to save up iterations
 			list.push_back(get<2>(chest)); // results
-			for (int k = 0; k < n + 1 ; k++) {				cout << "vertex " << vlist[k].vertex  << " ";				if (vlist[k].prev != nullptr) { cout << "prev " << vlist[k].prev->vertex << " "; }				if (vlist[k].next != nullptr) { cout << "next " << vlist[k].next->vertex << endl; }				else { cout << endl; }			}
+		
+		
+		}
+		return list;
+	}
+	deque<deque<int>> rDFS(deque<dlist> vlist)
+	{
+
+		deque<deque<int>> list(0);
+		while (vlist[0].next->vertex != 0)
+		{
+
+			tuple<deque<dlist>, deque<tuple<int, int>>, deque<int>> chest = DFS(vlist, vlist[0].next->vertex); // run BFS on the first vertex
+			vlist = get<0>(chest); // retrieve list to save up iterations
+			list.push_back(get<2>(chest)); // results
+
 
 		}
 		return list;
 	}
-
 };
