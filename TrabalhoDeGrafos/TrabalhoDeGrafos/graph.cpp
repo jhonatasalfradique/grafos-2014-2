@@ -82,15 +82,16 @@ class Graph
 				else cout << "Error output stack overflow.\n";
 				}
 
-			egd[grade - 1] = egd[grade - 1] + (double) 1/n; //f(d) = n(d)/n
+			egd[grade - 1] = egd[grade - 1] + 1 ; //f(d) = n(d)/n
 		}
 	
 		for (size_t i = 0; i < egd.size(); i++)
 		{
-			file << i << " " << egd[i] << "\n"; // Print each grade number
+			file << i << " " << (double) (egd[i] / n) << "\n"; // Print each grade number
 		}
 
 		file.close();
+		cout << "output end" << endl;
 	}
 	
 	struct dlist // double linked list
