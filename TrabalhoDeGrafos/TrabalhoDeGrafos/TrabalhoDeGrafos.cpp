@@ -4,8 +4,6 @@
 #include "stdafx.h"
 #include "graph.cpp"
 #include "string"
-#include <fstream>
-#include <iostream>
 
 
 
@@ -22,7 +20,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	cin >> b;
 	g = new Graph(filename , b);// (file name, type of data)
 	g->Output();
-	cout << "Press 1 for BFS or 2 for print mode" << endl;
+	cout << "Press 1 for BFS / 2 for print / 3 BFS print / 4 rBFS" << endl;
 	cin >> c;
 	
 	if (c == 1) {
@@ -30,7 +28,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		deque<tuple<int, int>> temp2(0);
 		for (int i = 0; i < g->n + 1; i++)
 		{
-			temp2.push_back(get<1>(g->BFS(g->chainstart(g->n), 1))[i]);
+			temp2.push_back(get<1>(g->BFS(g->chainstart(g->n), 1))[i]);//grabs structure to preview
 		}
 		for each(tuple<int, int> a in temp2)
 		{
@@ -38,41 +36,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		} 
 	}
 	if (c == 2) { for each (deque<int> a in g->db) { a.pop_back(); for each (int i in a){ cout << i << " "; } cout << endl; } }
-	if (c == 3)
-	{
-		
-		ofstream file; // output file
-		file.open("BFS.txt");
-		cout << "file opened" << endl;
-		cout << "Vertice pai e Nivel para cada vertice" << endl;
-		deque<tuple<int, int>> k = get<1>(g->BFS(g->chainstart(g->n), 1));
-		k.pop_front();
-		for each(tuple<int, int> a in k) //eliminate first row of counting stats
-		{
-			file << get<0>(a) << "  " << get<1>(a) << endl;
-		}
-		file.close();
-		cout << "file closed";
-	}
-	if (c == 4) 
-	{
-		ofstream file; // output file
-		file.open("rBFS.txt");
-		cout << (g->chainstart(g->n)).front().next->vertex;
-		
-		cout << "file opened" << endl;
-		
-		deque<deque<int>> k = g->rBFS(g->chainstart(g->n));
-		for each(deque<int> a in k) //eliminate first row of counting stats
-		{
-			for each(int p in a){ file << p << endl; }
-			
-		}
-		file.close();
-		cout << "file closed";
-	}
+	if (c == 3)	{g->printBFS("");	}
+	if (c == 4) {g->printrBFS("");}
 		 
-	
+	delete g;
 	return 0;
 }
 
