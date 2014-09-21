@@ -92,7 +92,37 @@ class Graph
 		file.close();
 	}
 	
-	struct dlist // double linked list
+
+	struct dlist{
+
+		int vertex;
+		dlist *prev = NULL;
+		dlist *next = NULL;
+
+
+		void insert(dlist newElement){
+
+			this->next = &newElement;
+			//newElement.prev = this;
+		}
+
+		void remove(){
+		
+			dlist next;
+			dlist prev;
+
+			next.next = this->next;
+			prev.prev = this->prev;
+
+			next.prev = &prev;
+			prev.next = &next;
+			
+			delete this;
+		}
+
+	};
+
+	/*struct dlist // double linked list
 	{
 		int vertex;
 		dlist *prev = NULL;
@@ -100,38 +130,61 @@ class Graph
 
 		void joinafter(dlist after) // join at the end  
 		{
+			cout << "joinafter(dlist after)" << "\n";
 			this->next = &after;//make this link point to the next
 			after.prev = this;	//make the next one point to this one
+			cout << "after " << after.prev << "\n";
 		};
 
 		void joinbefore(dlist before) // join at the end  
 		{
+			cout << "joinbefore(dlist before)" << "\n";
 			this->prev = &before;//make this link point to the previous
 			before.next = this;	//make the previous point to this one
 		};
 
 		void remove()
 		{
-			prev->next = this->next;
-			next->prev = this->prev;
+			cout << "remove() 1" << "\n";
+						
+			//if (this->next != NULL){
+				cout << "prev->next" << "\n";
+				prev->next = this->next;
+			//}
+			cout << "remove() 2" << "\n";
+			if (next->prev != NULL){
+				cout << "prev->prev" << "\n";
+				next->prev = this->prev;
+			}
+
+			cout << "delete this" << "\n";
 			delete this;			
 		};
 	};
 
-
+	*/
 	deque<tuple<int, int>> BFS(deque<deque<int>> vect, int v) // This function is based on List of Neighbors
 	{
 		deque<dlist> vlist(0); // free vertex deque double linked list
 
-			for (int i = 0; i < n + 1; i++)// start list to check who was not inspected, first slot for reference where it start
+			for (int i = 0; i <= n + 1; i++)// start list to check who was not inspected, first slot for reference where it start
 			{
 				dlist a;
 				a.vertex = i;
+				
 				if (i > 1)
 				{
-					vlist[i - 1].joinafter(a);//make this link point to the previous
+					vlist[i - 1].insert(a);//make this link point to the previous
+					a.prev = &vlist[i - 1];
+					//cout << i - 1 << "next " << a.next << "\n";
+					//cout << i - 1 << "prev " << a.prev << "\n";
+					cout << i -1 << "next " << vlist[i-1].next << "\n";
+					cout << i -1<< "prev " << vlist[i-1].prev << "\n";
 				}
+
+				
 				vlist.push_back(a);
+				
 			
 			}
 
@@ -151,6 +204,9 @@ class Graph
 				fifo.pop_front();
 				//	unreachable.erase(u-1);
 
+				cout << " vlist[0].next->vertex" << vlist[0].next->vertex << "\n";
+//				get<1>(marker[0]) = vlist[0].next->vertex + 1; // pass first free vertex
+
 				for each (int w in vect[u - 1])
 				{
 					if (get<0>(marker[w]) == 0)
@@ -158,12 +214,13 @@ class Graph
 						marker[w].swap(make_tuple(u, 1 + get<1>(marker[u]))); // u is w parent on the bfs tree
 						get<0>(marker[0]) = get<0>(marker[0]) + 1; // 1 more vertex read
 						fifo.push_back(w);// w added to the list
+						cout << "w= " <<  w << "\n";
 						vlist[w].remove();
+						cout << "size = " << vlist.size() << "\n";
 					}
 				}
 			}
 
-			get<1>(marker[0]) = vlist[0].next->vertex + 1; // pass first free vertex
 			return marker;
 		}
 
@@ -177,7 +234,7 @@ class Graph
 			a.vertex = i;
 			if (i > 1)
 			{
-				vlist[i - 1].joinafter(a);//make this link point to the previous
+//				vlist[i - 1].joinafter(a);//make this link point to the previous
 			}
 			vlist.push_back(a);
 
@@ -211,7 +268,7 @@ class Graph
 			}
 		}
 
-		get<1>(marker[0]) = vlist[0].next->vertex + 1; // pass first free vertex
+		//get<1>(marker[0]) = vlist[0].next->vertex + 1; // pass first free vertex
 		return marker;
 	}
 
