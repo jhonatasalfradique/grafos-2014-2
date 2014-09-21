@@ -14,8 +14,8 @@ class Graph
 	
 	int n; //vertex number
 	int m; //edge number
-	vector<deque<int>> db; // graph
-	
+	vector<deque<int>> db; // list
+	vector<vector<int>> db1;//matrix
 	Graph::Graph(string filename,int t)
 	{
 		m = 0;
@@ -25,17 +25,17 @@ class Graph
 		infile >> n;//get N from first line of file
 		cout << "File loaded." << endl;
 		if (t == 2){//matrix
-			vector<deque<int>> data(n, deque<int> (n+1,0)); // vector square matrix filled with 0 (extra slot for number of neighbors)
+			vector<vector<int>> data(n, vector<int> (n+1,0)); // vector square matrix filled with 0 (extra slot for number of neighbors)
 			// Begin reading your stream here
 			int i, j; //vertex i and j from the graph
 			while (infile >> i >> j){ // load pair of data in each variable
 				data[i - 1][j - 1] = 1; // vertex i receive j as neighboor
 				data[j - 1][i - 1] = 1; // vertex j receive i as neighboor
 				m++; // each line add 1 edge
-				data[i - 1][n] ++;
-				data[j - 1][n] ++;//Grade + 1
+				data[i - 1][n] = data[i - 1][n] + 1;
+				data[j - 1][n] = data[j - 1][n] + 1;//Grade + 1
 				}
-			db = data;
+			db1 = data;
 			}
 		else {//lista de adjacencia
 			vector<deque<int>> data(n, deque<int>(1,0)); //Deck de arestas de adjacencia (last entry number of neighbors)
@@ -70,19 +70,37 @@ class Graph
 
 		deque<double> egd(1,(double) 0.0);// empiric grade distribution
 		
-		for each (deque<int> di in db)
-		{
-			int grade = di.back();//Grade of vertex
-			if (grade > (int) egd.size()) 
+		if (!(db1.empty())) { 
+			for each (vector<int> di in db1)
+			{
+				int grade = di.back();//Grade of vertex
+				if (grade > (int)egd.size())
 				{
-				if (grade < (int)egd.max_size())// check for memory leak
-				{
-					egd.resize(grade, (double) 0.0);
-				} 
-				else cout << "Error output stack overflow.\n";
+					if (grade < (int)egd.max_size())// check for memory leak
+					{
+						egd.resize(grade, (double) 0.0);
+					}
+					else cout << "Error output stack overflow.\n";
 				}
 
-			egd[grade - 1] = egd[grade - 1] + 1 ; //f(d) = n(d)/n
+				egd[grade - 1] = egd[grade - 1] + 1; //f(d) = n(d)/n
+			}
+		}
+		else{
+			for each (deque<int> di in db)
+			{
+				int grade = di.back();//Grade of vertex
+				if (grade > (int)egd.size())
+				{
+					if (grade < (int)egd.max_size())// check for memory leak
+					{
+						egd.resize(grade, (double) 0.0);
+					}
+					else cout << "Error output stack overflow.\n";
+				}
+
+				egd[grade - 1] = egd[grade - 1] + 1; //f(d) = n(d)/n
+			}
 		}
 	
 		for (size_t i = 0; i < egd.size(); i++)
@@ -354,8 +372,6 @@ class Graph
 		tuple<vector<dlist>, vector<int>, vector<int>, deque<int>>  temp = make_tuple(vlist, marker1, marker2, list);
 		return temp;
 	}
-
-	
 	deque<deque<int>> rBFS(vector<dlist> vlist)
 	{
 
