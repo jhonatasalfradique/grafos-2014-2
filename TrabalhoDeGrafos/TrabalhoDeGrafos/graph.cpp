@@ -206,7 +206,7 @@ class Graph
 		}
 		file.close();
 	}
-	void printDFS(string s)
+	void printrDFS(string s)
 	{
 		ofstream file; // output file
 		file.open(s + "rDFS.txt");
