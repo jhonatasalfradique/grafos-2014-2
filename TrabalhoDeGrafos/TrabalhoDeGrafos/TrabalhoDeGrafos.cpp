@@ -28,15 +28,19 @@ int _tmain(int argc, _TCHAR* argv[])
 		int bc;
 		cout << "Choose the vertex to start BFS" << endl;
 		cin >> bc;
-		deque<tuple<int, int>> temp2(0);
+		deque<int> temp2(0);
+		deque<int> temp3(0);
 		for (int i = 0; i < g->n + 1; i++)
 		{
-			temp2.push_back(get<1>(g->BFS(g->chainstart(g->n), bc))[i]);//grabs structure to preview
+			//temp2.push_back(get<1>(g->BFS(g->chainstart(g->n), bc))[i]);//grabs structure to preview
+			//temp2.push_back(get<2>(g->BFS(g->chainstart(g->n), bc))[i]);//grabs structure to preview
 		}
-		for each(tuple<int, int> a in temp2)
+		
+		//for (int i = 0; i < g->n + 1; i++)
 		{
-			cout << get<0>(a) << " at lvl " << get<1>(a) << endl;
-		} 
+			//cout << temp2[i] << " at lvl " << temp3[i] << endl;
+		}
+		
 	}
 	if (c == 2) { for each (deque<int> a in g->db) { a.pop_back(); for each (int i in a){ cout << i << " "; } cout << endl; } }
 	if (c == 3)	{ clock_t timev = clock(); g->printBFS(filename); cout << "tempo de exec " << (float)((timev - clock())/CLOCKS_PER_SEC ); }
