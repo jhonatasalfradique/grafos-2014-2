@@ -23,7 +23,7 @@ class Graph
 		cout << "Filename: " +  filename << endl;
 		std::ifstream infile(filename);		//argumento de entrada nome do arquivo
 		infile >> n;//get N from first line of file
-		cout << "File loaded." << endl;
+		cout << "File loading" ;
 		if (t == 2){//matrix
 			vector<vector<int>> data(n, vector<int> (n+1,0)); // vector square matrix filled with 0 (extra slot for number of neighbors)
 			// Begin reading your stream here
@@ -38,19 +38,21 @@ class Graph
 			db1 = data;
 			}
 		else {//lista de adjacencia
-			vector<deque<int>> data(n, deque<int>(1,0)); //Deck de arestas de adjacencia (last entry number of neighbors)
+			db = vector<deque<int>> (n, deque<int>(1,0)); //Deck de arestas de adjacencia (last entry number of neighbors)
 
 			// Begin reading your stream here
 			int i, j; //vertex i and j from the graph
 			while (infile >> i >> j) // load pair of data in each variable
-			{
-				data[i - 1].back() = 1 + data[i - 1].back();//Grade + 1
-				data[j - 1].back() = 1 + data[j - 1].back();//Grade + 1
+			{	
+				if (m % 100000 == 0){ cout << "."; }
+				db[i - 1].back() = 1 + db[i - 1].back();//Grade + 1
+				db[j - 1].back() = 1 + db[j - 1].back();//Grade + 1
 				m++; // each line add 1 edge
-				data[i - 1].push_front(j); // vertex i receive j as neighboor
-				data[j - 1].push_front(i); // vertex j receive i as neighboor
+				db[i - 1].push_front(j); // vertex i receive j as neighboor
+				db[j - 1].push_front(i); // vertex j receive i as neighboor
 			}
-			db = data;
+			cout << "Load Completed" << endl;
+			//db = data;
 		}
 	
 	}
@@ -66,14 +68,16 @@ class Graph
 		file << "# m = " << m << "\n";
 		double d_medio = (double) (2 * m) / (n);// grau medio = 2E/V (E aresta e V Vertice)
 		file << "# d_medio = " <<  d_medio << "\n";
-
+		cout  << "# n,m = " <<n << ","<< m << endl;
 
 		deque<double> egd(1,(double) 0.0);// empiric grade distribution
 		
-		if (!(db1.empty())) { 
-			for each (vector<int> di in db1)
+	
+			cout << "Math Progress ";
+
+			for (int i = 0; i < n; i++)//for each (deque<int> di in db)
 			{
-				int grade = di.back();//Grade of vertex
+				int grade = db[i].back();//Grade of vertex
 				if (grade > (int)egd.size())
 				{
 					if (grade < (int)egd.max_size())// check for memory leak
@@ -82,32 +86,18 @@ class Graph
 					}
 					else cout << "Error output stack overflow.\n";
 				}
-
-				egd[grade - 1] = egd[grade - 1] + 1; //f(d) = n(d)/n
-			}
-		}
-		else{
-			for each (deque<int> di in db)
-			{
-				int grade = di.back();//Grade of vertex
-				if (grade > (int)egd.size())
+				if (grade>0)
 				{
-					if (grade < (int)egd.max_size())// check for memory leak
-					{
-						egd.resize(grade, (double) 0.0);
-					}
-					else cout << "Error output stack overflow.\n";
-				}
-
-				egd[grade - 1] = egd[grade - 1] + 1; //f(d) = n(d)/n
+					egd[grade - 1] = egd[grade - 1] + 1;
+				} //f(d) = n(d)/n
 			}
-		}
 	
 		for (size_t i = 0; i < egd.size(); i++)
 		{
-			file << i << " " << (double) (egd[i] / n) << "\n"; // Print each grade number
+			if (i % 100000 == 0){cout << "!"; }
+			file << i+1 << " " << (double) (egd[i] / n) << "\n"; // Print each grade number
 		}
-
+		cout << endl;
 		file.close();
 		cout << "output end" << endl;
 	}
@@ -226,11 +216,11 @@ class Graph
 			
 		}
 
-		for each(deque<int> a in k) 
+		for (int t = 0; t < (int)k.size(); t++)//for each(deque<int> a in k) 
 		{
-			file << "size :" << a.front() << " components -";;
-			a.pop_front();
-			for each(int p in a){ file << ">" <<p; }
+			file << "size :" << k[t].front() << " components -";;
+			for (int kt = 1; kt < (int)k[t].size(); kt++)//for each(int p in k[t])
+			{ file << ">" << k[t][kt]; }
 			file << endl;
 		}
 		file.close();
@@ -239,7 +229,7 @@ class Graph
 	{
 		ofstream file; // output file
 		file.open(s + "_rDFS.txt");
-		deque<deque<int>> k = rDFS(chainstart(n));
+		deque<deque<int>> k = rBFS(chainstart(n));
 		for (int t = 0; t < (int)k.size(); t++)  // Sorting K based on size stored in k[][0]
 		{
 			int i = t;
@@ -257,11 +247,13 @@ class Graph
 
 		}
 
-		for each(deque<int> a in k)
+		for (int t = 0; t < (int)k.size(); t++)//for each(deque<int> a in k) 
 		{
-			file << "size :" << a.front() << " components -";;
-			a.pop_front();
-			for each(int p in a){ file << ">" << p; }
+			file << "size :" << k[t].front() << " components -";;
+			for (int kt = 1; kt < (int)k[t].size(); kt++)//for each(int p in k[t])
+			{
+				file << ">" << k[t][kt];
+			}
 			file << endl;
 		}
 		file.close();
