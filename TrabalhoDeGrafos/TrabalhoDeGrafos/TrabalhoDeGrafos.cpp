@@ -31,18 +31,18 @@ int _tmain(int argc, _TCHAR* argv[])
 			int bc;
 			cout << "Choose Vertex to start: ";
 			cin >> bc;
-			clock_t timev = clock(); g->printBFS(filename, bc); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC);
+			clock_t timev = clock(); g->printBFS(filename, bc); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC) << endl;
 		}
 		if (c == 2) {
 			int bc;
 			cout << "Choose Vertex to start: ";
 			cin >> bc;
-			clock_t timev = clock(); g->printDFS(filename, bc); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC);
+			clock_t timev = clock(); g->printDFS(filename, bc); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC) << endl;
 		}
 
 		if (c == 3) { for each (deque<int> a in g->db) { a.pop_back(); for each (int i in a){ cout << i << " "; } cout << endl; } }
-		if (c == 4)	{ clock_t timev = clock(); g->printBFS(filename, 1); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC); }
-		if (c == 5) { clock_t timev = clock(); g->printDFS(filename, 1); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC); }
+		if (c == 4)	{ clock_t timev = clock(); g->printBFS(filename, 1); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC) << endl; }
+		if (c == 5) { clock_t timev = clock(); g->printDFS(filename, 1); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC) << endl; }
 		if (c == 6) { g->printrBFS(filename); }
 		if (c == 7) { g->printrDFS(filename); }
 	}
