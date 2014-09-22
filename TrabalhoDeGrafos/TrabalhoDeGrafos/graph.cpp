@@ -283,10 +283,10 @@ class Graph
 
 			while (!fifo.empty())
 			{
-				cout << "|";
 				int u = fifo.front(); // pick and erase U from list
 				fifo.pop_front();
 				int z = (int) db[u - 1].size();
+				if (u % 1000 == 0) { cout << "|"; }
 				for (int k = 0; k < z - 1 ; k++)
 				{	
 					int w = db[u - 1][k];
@@ -336,10 +336,11 @@ class Graph
 
 		while (!filo.empty())
 		{
-			cout << "|";
+
 			int u = filo.back(); // pick and erase U from list
 			filo.pop_back();
 			int z = (int)db[u - 1].size();
+			if (u % 1000 == 0) { cout << "|"; }
 			for (int k = 0; k < z - 1; k++)
 			{
 				int w = db[u - 1][k];

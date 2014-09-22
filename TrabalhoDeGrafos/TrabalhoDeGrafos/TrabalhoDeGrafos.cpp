@@ -21,28 +21,31 @@ int _tmain(int argc, _TCHAR* argv[])
 	cin >> b;
 	g = new Graph(filename + ".txt" , b);// (file name, type of data)
 	g->Output(filename);
-	cout << "Press:\n1 for BFS(v) \n2 for DFS(v) \n3 show graph \n4 BFS print \n5 DFS \n6 rBFS \n7 rDFS" << endl;
-	cin >> c;
-	
-	if (c == 1) {
-		int bc;
-		cout << "Choose Vertex to start: ";
-		cin >> bc;
-		clock_t timev = clock(); g->printBFS(filename, bc); cout << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC);
-	}
-	if (c == 2) {
-		int bc;
-		cout << "Choose Vertex to start: ";
-		cin >> bc;
-		clock_t timev = clock(); g->printDFS(filename, bc); cout << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC);
-	}
+	c = 99;
+	while (c != 0)
+	{
+		cout << "Press:\n1 for BFS(v) \n2 for DFS(v) \n3 show graph \n4 BFS print \n5 DFS \n6 rBFS \n7 rDFS" << endl;
+		cin >> c;
 
-	if (c == 3) { for each (deque<int> a in g->db) { a.pop_back(); for each (int i in a){ cout << i << " "; } cout << endl; } }
-	if (c == 4)	{ clock_t timev = clock(); g->printBFS(filename, 1); cout << "tempo de exec " << (float)((timev - clock())/CLOCKS_PER_SEC ); }
-	if (c == 5) { clock_t timev = clock(); g->printDFS(filename, 1); cout << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC); }
-	if (c == 6) { g->printrBFS(filename); }
-	if (c == 7) { g->printrDFS(filename); }
+		if (c == 1) {
+			int bc;
+			cout << "Choose Vertex to start: ";
+			cin >> bc;
+			clock_t timev = clock(); g->printBFS(filename, bc); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC);
+		}
+		if (c == 2) {
+			int bc;
+			cout << "Choose Vertex to start: ";
+			cin >> bc;
+			clock_t timev = clock(); g->printDFS(filename, bc); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC);
+		}
 
+		if (c == 3) { for each (deque<int> a in g->db) { a.pop_back(); for each (int i in a){ cout << i << " "; } cout << endl; } }
+		if (c == 4)	{ clock_t timev = clock(); g->printBFS(filename, 1); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC); }
+		if (c == 5) { clock_t timev = clock(); g->printDFS(filename, 1); cout << endl << "tempo de exec " << (float)((timev - clock()) / CLOCKS_PER_SEC); }
+		if (c == 6) { g->printrBFS(filename); }
+		if (c == 7) { g->printrDFS(filename); }
+	}
 	delete g;
 	return 0;
 }
