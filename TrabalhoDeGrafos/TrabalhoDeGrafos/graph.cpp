@@ -181,7 +181,7 @@ class Graph
 		ofstream file; // output file
 		file.open(s + "("+ to_string(v) + ")"+ "_DFS.txt");
 		cout << "file opened" << endl;
-		auto ak = BFS(chainstart(n), v);
+		auto ak = DFS(chainstart(n), v);
 		vector<int> k1 = get<1>(ak);
 		vector<int> k2 = get<2>(ak);
 
@@ -229,7 +229,7 @@ class Graph
 	{
 		ofstream file; // output file
 		file.open(s + "_rDFS.txt");
-		deque<deque<int>> k = rBFS(chainstart(n));
+		deque<deque<int>> k = rDFS(chainstart(n));
 		for (int t = 0; t < (int)k.size(); t++)  // Sorting K based on size stored in k[][0]
 		{
 			int i = t;
