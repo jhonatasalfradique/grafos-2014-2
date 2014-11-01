@@ -258,66 +258,26 @@ public:
         } else {
         double infinite = 9999;
         
-        vector<double> dist = vector<double>(this->n);
+        vector<double> dist = vector<double>(this->n + 1, infinite);
         
-        for(int k = 0; k < this->n; k++){
-            
-            dist[k] = infinite;
-            cout << "d["<< k << "]=" << dist[k] << endl;
-        }
-        vector<int> S;
+        vector<int> V = vector<int>(this->n +1);
         
-        dist[s] = 0.0;
-        
-        //S.push_back(s);
-        int minimumDist = 0;
-        double distance= 0.0;
-        while( S.size() < this->n){
+        for (int i = 0; i< V.size(); i++){
             
-           
-            for(int i= 0; i < dist.size(); i++){
-                
-                
-                if(dist[i] <= distance){
-                    cout << " Menor dist " << dist[i]  << " i=" << i<< endl;
-                    distance = dist[i];
-                    minimumDist = i;
-                    
-                }
-                                
-            }
-            
-            S.push_back(minimumDist);
-            
-            for(int j = 0; j < this->graphWeight[minimumDist].size(); j++){
-                cout << "j= " << j << endl;
-                cout << "minimumDist" << minimumDist << endl;
-                    cout << "this->graphWeight[minimumDist][j].first" << this->graphWeight[minimumDist][j].first << endl;
-                    cout << "dist[minimumDist] = " <<  dist[minimumDist] <<
-                            "dist[this->graphWeight[minimumDist][j].first]" << dist[this->graphWeight[minimumDist][j].first] << "\n" <<
-                            "this->weight(minimumDist, this->graphWeight[minimumDist][j].first)" << this->weight(minimumDist, this->graphWeight[minimumDist][j].first) << endl;
-                if(dist[this->graphWeight[minimumDist][j].first] > (dist[minimumDist]
-                        + this->weight(minimumDist, this->graphWeight[minimumDist][j].first))){
-                    
-                            
-                    
-                    dist[j] = (dist[minimumDist] + this->weight(minimumDist, this->graphWeight[minimumDist][j].first));
-                    cout << "dist[j]= " << dist[j] << endl;
-                }
-                
-            }
-            
+            V[i] = i; 
+            cout << "V[i]= " << V[i]<< endl;
         }
         
-        for(int i = 0; i< S.size(); i++){
+        for (int i = 0; i< dist.size(); i++){
             
-            cout << S[i] << endl;
+            cout << "dist[i]= " << dist[i] << endl;
+        }
         }
         
-    }
         
         
     
+        
     }
 
 
