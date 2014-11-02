@@ -248,6 +248,21 @@ public:
 
     }
     
+    
+    vector<int> getChild(int father){
+        
+        vector<int> ret;
+        
+        for (int i = 0; i< this->graphWeight[father].size(); i++){
+            
+            ret.push_back( this->graphWeight[father][i].first);
+            
+        }
+        
+        return ret;
+        
+    }
+    
     void Dijkstra(int s){
         
         if(this->negativeGraph){
